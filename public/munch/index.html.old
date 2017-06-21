@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<style type="text/css">
+
+body {
+	background-color: #D3D3D3;
+}
+
+div {
+	position: absolute;
+}
+
+#master {
+	z-index: 1;
+	margin-left: -300px;
+	margin-top: -250px;
+	left: 50%;
+	top: 50%;
+	height: 500px;
+	width: 600px;
+}
+
+#master-background {
+	background-image: url(background.png);
+	z-index: 0;
+	margin-left: -330px;
+	margin-top: -280px;
+	left: 50%;
+	top: 50%;
+	height: 560px;
+	width: 660px;
+}
+
+.apple {
+	height: 100px;
+	width: 100px;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.turn {
+	margin-left: 330px;
+	margin-top: -250px;
+	left: 50%;
+	top: 50%;
+	width: 100px;
+}
+
+#challenge {
+	margin-left: -300px;
+	left: 50%;
+	margin-bottom: 280px;
+	bottom: 50%;
+	width: 600px;
+}
+
+#credits {
+	margin-left: -300px;
+	left: 50%;
+	margin-top: 280px;
+	top: 50%;
+	width: 600px;
+}
+
+#title {
+	margin-right: 330px;
+	right: 50%;
+	margin-top: -250px;
+	top: 50%;
+	height: 500px;
+}
+
+#rules {
+	margin-left: 330px;
+	margin-bottom: -250px;
+	left: 50%;
+	bottom: 50%;
+	width: 100px;
+}
+
+#reset {
+	margin-right: 330px;
+	margin-bottom: -250px;
+	right: 50%;
+	bottom: 50%;
+	width: 100px;
+	text-align: right;
+	color: red;
+	cursor: pointer;
+}
+
+.popup {
+	border-color: #007fff;
+	border-style: solid;
+	border-width: 3px;
+	right: 0px;
+	bottom: 0px;
+	width: 200px;
+	background-color: white;
+	z-index: 1000000;
+	padding: 5px;
+}
+
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+
+var rowcount = [6,6,6,6,6];
+
+var winners = ["10000","21000","22100","22210","22221","31100","32000","33110","33211","33322","41110","42111","42200","43000","44222","44311","51111","52110","53200","53320","54000","55220","55300","62211","62220","63111","63300","64200","64332","64433","65000","66333","66432","66542","66652"];
+
+function highlight (r, c, hl, f) {
+	for (i=r; i<5; i++) {
+		if (f) {
+			rowcount[i] = Math.min(rowcount[i], c);
+		};
+		for (j=c; j<6; j++) {
+			if (f) {
+				$("#"+i+""+j).css("background-color", hl).fadeOut();
+			}
+			else {
+				$("#"+i+""+j).css("background-color", hl);
+			};
+		};
+	};
+};
+
+function goComputer () {
+	if (rowcount.join('') == "00000") {
+		$("#lose").show();
+		$("#reset").fadeIn();
+		return false;
+	};
+	
+	var winmoves = [];
+	var losemoves = [0,0];
+	var losesum = 0;
+	
+	for (r=0; r<5; r++) {
+		for (c=0; c<6; c++) {
+			var temprowcount = rowcount.slice(0);
+			for (i=r; i<5; i++) {
+				temprowcount[i] = Math.min(rowcount[i], c);
+			};
+			var move = temprowcount.join('');
+			if (move == rowcount.join('')) {
+				continue;
+			};
+			
+			var win = false;
+			for (i=0; i<winners.length; i++) {
+				if (winners[i] == move) {
+					win = true;
+				};
+			};
+			
+			if (win) {
+				winmoves.push(r);
+				winmoves.push(c);
+			}
+			else {
+				if ((r+c) == losesum) {
+					losemoves.push(r);
+					losemoves.push(c);
+				}
+				else if ((r+c) > losesum) {
+					losesum = r+c;
+					losemoves = [r, c];
+				};
+			};
+		};
+	};
+	
+	if (winmoves.length > 0) {
+		x = Math.round(Math.random() * (winmoves.length/2 - 1)) * 2;
+		highlight(winmoves[x], winmoves[x+1], "gray", true);
+	}
+	else {
+		if (rowcount.join('') == "66333") {
+			if (Math.random() < .5) {
+				highlight(1, 4, "gray", true);
+			}
+			else {
+				highlight(4, 2, "gray", true);
+			};
+		}
+		else {
+			x = Math.round(Math.random() * (losemoves.length/2 - 1)) * 2;
+			highlight(losemoves[x], losemoves[x+1], "gray", true);
+		};
+	};
+	
+	$("#human").show();
+	$("#computer").hide();
+	setTimeout("bindApple()", 1000);
+};
+
+function bindApple () {
+	if (rowcount.join('') == "00000") {
+		$("#win").show();
+		$("#reset").fadeIn();
+		return false;
+	};
+	
+	$(".apple").mouseover(function () {
+		var apple = $(this);
+		var r = apple.attr("id").charAt(0)*1;
+		var c = apple.attr("id").charAt(1)*1;
+		
+		$(".apple").html("<img src='apple-green.png' />");
+		$("#00").html("<img src='apple-red.png' />");
+		$(".apple").css("background-color", "#FFFFFF");
+		
+		if (apple.attr("id") == "00") {
+			apple.html("<img src='apple-rglow.png' />");
+		}
+		else {
+			apple.html("<img src='apple-gglow.png' />");
+		};
+		
+		highlight(r, c, "#73CEFF", false);
+	});
+	
+	$(".apple").mousedown(function () {
+		var apple = $(this);
+		var r = apple.attr("id").charAt(0)*1;
+		var c = apple.attr("id").charAt(1)*1;
+		
+		if (r+c != 0) {
+			$("#human").hide();
+			$("#computer").show();
+		};
+		
+		$(".apple").unbind();
+		highlight(r, c, "yellow", true);
+		setTimeout("goComputer()", 1000);
+	});
+};
+
+function setupBoard () {
+	$("#master").html("");
+	$("#win").hide();
+	$("#lose").hide();
+	$("#computer").hide();
+	$("#human").show();
+	$("#reset").hide();
+	$("#rules-more").hide();
+	
+	$("#link-rules-more").click(function () {
+		$("#rules-more").show();
+	});
+	
+	$("#link-rules-close").click(function () {
+		$("#rules-more").hide();
+	});
+	
+	rowcount = [6,6,6,6,6];
+	
+	for (r=0; r<5; r++) {
+		for (c=0; c<6; c++) {
+			$("#master").append("<div class='apple' id='"+r+c+"' style='left: "+(100*c)+"px; top: "+(100*r)+"px;'><img src='apple-green.png' /></div>");
+		};
+	};
+	$("#00").html("<img src='apple-red.png' />");
+	
+	bindApple();
+	
+	$("#iPhone").hide();
+	$("#iPhone-click").click(function () {
+		$("#iPhone").show();
+	});
+	$("#iPhone-hide").click(function () {
+		$("#iPhone").hide();
+	});
+};
+
+$(function () {
+	setupBoard();
+	
+	$("#reset").click(function () {
+		setupBoard();
+	});
+});
+
+</script>
+<title>Munch 5x6</title>
+</head>
+<body>
+
+<div id="master"></div>
+
+<div id="master-background"></div>
+
+<div class="turn" id="human"><img src="human.png" /><br /><center>It's your turn.</center></div>
+
+<div class="turn" id="computer"><img src="computer.png" /><br /><center>The computer is thinking.</center></div>
+
+<div id="credits"><center>Created by <a href="http://www.philipbrocoum.com">Philip Brocoum</a>. Site made with <a href="http://www.jquery.com">jQuery</a>. Perfect strategy calculated using <a href="http://tryruby.hobix.com">Ruby</a>.</center></div>
+
+<div id="title"><center><h1>M<br />U<br />N<br />C<br />H<br /></h1>5x6</center></div>
+
+<div id="rules"><b>Rules: </b><br />Whoever eats the poison apple loses.<br /><br /><a href="#" id="link-rules-more">More...</a></div>
+<div id="rules-more" class="popup"><div id="link-rules-close" style="color: red; text-align: right; background-color: #b5e8ff; width: 200px; cursor: pointer;">Close [X]&nbsp;</div><br /><b>Rules: </b><br />Players take turns eating apples by choosing an apple and then eating it, along with all the apples below and to the right of it. The blue highlight will show you which apples will be eaten. In this manner, players "munch" away at the board. This is where the game gets its name. Players must eat at least one apple during their turn. Whoever eats the poison apple, the red apple in the upper left-hand corner, loses.<br /><br />FYI: The first player always wins (ie. the human), so long as s/he plays perfectly. So, don't accuse the computer of cheating.</div>
+
+<div id="challenge"><center>Can you beat the computer?</center></div>
+
+<img id="win" src="win.png" style="z-index: 1000; position: absolute; top: 50%; left: 50%; margin-top: -64px; margin-left: -64px;" />
+<img id="lose" src="lose.png" style="z-index: 1000; position: absolute; top: 50%; left: 50%; margin-top: -64px; margin-left: -64px;" />
+
+<div id="reset">Play again.</div>
+
+</body>
+</html>
