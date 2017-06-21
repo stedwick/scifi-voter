@@ -22,9 +22,11 @@
           %td
             - unless item.votes.find_by_ip_address(request.remote_ip)
               %div{:id => "promoteDemote_#{item.id}"}
-                - form_tag(:url => {:controller => :items, :action => :vote, :id => item, :value => 1}, :remote => true, :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, 1)") do
+                = form_with(:url => {:controller => :items, :action => :vote, :id => item, :value => 1}, :id => "vote_up_#{item.id}", :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, 1)") do
                   = submit_tag "+", :class => "promoteDemote promote"
-                - form_tag(:url => {:controller => :items, :action => :vote, :id => item, :value => -1}, :remote => true, :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, -1)") do
+                = form_with(:url => {:controller => :items, :action => :vote, :id => item, :value => -1}, :id => "vote_down_#{item.id}", :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, -1)") do
                   = submit_tag "-", :class => "promoteDemote demote"
+            = render "vote_js", :id => item.id
+
 - else
   This category is empty.

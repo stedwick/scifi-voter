@@ -1,0 +1,16 @@
+<script type='text/javascript'>
+  try {
+    $("vote_up_<%= id %>").onsubmit = function(){
+      beforeVote(<%= id %>);
+      afterVote(<%= id %>, 1);
+      new Ajax.Request('/items/vote/<%= id %>?value=1');
+      return false;
+    };
+    $("vote_down_<%= id %>").onsubmit = function(){
+      beforeVote(<%= id %>);
+      afterVote(<%= id %>, -1);
+      new Ajax.Request('/items/vote/<%= id %>?value=-1');
+      return false;
+    };
+  } catch(err) {}
+</script>

@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   get 'startrekvoyager/characters', :controller => 'categories', :action => 'show', :id => 5, :as => :st_voy_chars
   get 'startrekthenextgeneration/characters', :controller => 'categories', :action => 'show', :id => 12, :as => :st_tng_chars
   get 'doctorwho/characters', :controller => 'categories', :action => 'show', :id => 15, :as => :drw_chars
+
+  post 'items/vote/:id', :controller => "items", :action => "vote"
   root 'categories#index'
 end

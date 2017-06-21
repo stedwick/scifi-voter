@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def vote
     item = Item.find(params[:id])
 
@@ -12,6 +13,6 @@ class ItemsController < ApplicationController
       item.save
     end
 
-    render :nothing => true
+    render body: nil
   end
 end
