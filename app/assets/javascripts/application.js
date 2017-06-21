@@ -12,7 +12,6 @@
 //
 //= require prototype
 //= require rails-ujs
-//= require turbolinks
 //= require_tree .
 Event.observe(window, 'load', function () {
   array_net_votes = $$('.netVotes');
