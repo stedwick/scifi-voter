@@ -1,0 +1,20 @@
+%html
+  -# = javascript_include_tag :defaults
+  -# = javascript_include_tag 'tablekit'
+  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  -# = stylesheet_link_tag 'voter'
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+  -# = stylesheet_link_tag 'tablekit'
+
+  %title= @header1 + ' - ' + @header2 + ( @header3 == '' ? '' : ' - ' + @header3 )
+
+  %body
+    %p= link_to "<< back to Philip Brocoum's home page", "http://www.PhilipBrocoum.com"
+    %h1= link_to @header1, "/"
+    %h2= @header2
+    %h3= @header3
+
+    %p I originally created this for my own amusement, and I have to say I'm shocked by how accurate the votes turned out to be.
+
+    = yield

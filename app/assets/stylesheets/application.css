@@ -13,3 +13,128 @@
  *= require_tree .
  *= require_self
  */
+ a {
+   text-decoration: none; }
+
+ form {
+   margin-right: 15px;
+   float: left; }
+
+ tr {
+   height: 55px; }
+
+ input.promoteDemote {
+   border: solid 2px #c8c8c8;
+   color: #c8c8c8;
+   background-color: white;
+   cursor: pointer;
+   width: 30px; }
+
+ input.promote:hover {
+   color: #1ee61e;
+   border-color: #1ee61e;
+   background-color: #f0fff0; }
+
+ input.demote:hover {
+   color: #e61e1e;
+   border-color: #e61e1e;
+   background-color: #fff0f0; }
+
+ .netVotes {
+   padding: 3px;
+   text-align: center;
+   font-weight: bold;
+   border: 1px solid #323232; }
+
+
+
+
+   .panel {
+   	clear: both;
+   	display: none;
+   	border: 3px solid #00adef;
+   	padding: 1em;
+   	background-color: #FFF;
+   	margin: 0;
+   }
+   .panel.active-tab-body {
+   	display: block;
+   }
+   #tabs {
+   	list-style: none;
+   	padding: 0;
+   	margin: 0;
+   }
+   #tabs li {
+   	position: relative;
+   	float: left;
+   }
+   #tabs a {
+   	float: left;
+   	padding: 5px 8px;
+   	margin-right: 6px;
+   	border: 1px solid #00adef;
+   	border-width: 1px 1px 0 1px;
+   	text-decoration: none;
+   	color: #000;
+   }
+   #tabs a:hover {
+   	background-color: #8dd8f8;
+   	color: #FFF;
+   }
+   #tabs a.active-tab {
+   	background-color: #00adef;
+   	color: #FFF;
+   }
+   table {
+   	border-collapse: collapse;
+   }
+
+   td, th {
+   	padding: 0.5em;
+   	border: 1px solid #CCC;
+   }
+
+   thead, tfoot {
+   	background-color: #DDD;
+   }
+
+   tr.rowodd {
+   	background-color: #FFF;
+   }
+
+   tr.roweven {
+   	background-color: #F2F2F2;
+   }
+
+   .sortcol {
+   	cursor: pointer;
+   	padding-right: 20px;
+   	background-repeat: no-repeat;
+   	background-position: right center;
+   }
+   .sortasc {
+   	background-color: #DDFFAC;
+   	background-image: url("../images/tablekit/up_arrow.gif");
+   }
+   .sortdesc {
+   	background-color: #B9DDFF;
+   	background-image: url("../images/tablekit/down_arrow.gif");
+   }
+   .nosort {
+   	cursor: default;
+   	background-color: #F7F2F2;
+   }
+
+   th.resize-handle-active {
+   	cursor: e-resize;
+   }
+
+   div.resize-handle {
+   	cursor: e-resize;
+   	width: 2px;
+   	border-right: 1px dashed #1E90FF;
+   	position:absolute;
+   	top:0;
+   	left:0;
+   }

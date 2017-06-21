@@ -1,0 +1,30 @@
+- if @category.items.size > 0
+  %p
+    = (google_chart(@category.items) || "").html_safe
+  %table.sortable
+    %thead
+      %tr
+        %th.sortfirstasc.number Net Votes
+        - for header in @category.headers.split('::')
+          %th.text= header
+        %th.nosort= "?"
+        %th{:class => "nosort", :style => "width: 100px;"} Cast Vote
+    %tbody
+      - for item in @category.items
+        %tr
+          %td
+            %div{:class => "netVotes", :id => "netVotes_#{item.id}"}= item.net_votes
+          - for field in item.fields.split('::')
+            %td= field
+          %td
+            - if item.tooltip
+              = item.tooltip
+          %td
+            - unless item.votes.find_by_ip_address(request.remote_ip)
+              %div{:id => "promoteDemote_#{item.id}"}
+                - form_tag(:url => {:controller => :items, :action => :vote, :id => item, :value => 1}, :remote => true, :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, 1)") do
+                  = submit_tag "+", :class => "promoteDemote promote"
+                - form_tag(:url => {:controller => :items, :action => :vote, :id => item, :value => -1}, :remote => true, :before => "beforeVote(#{item.id})", :after => "afterVote(#{item.id}, -1)") do
+                  = submit_tag "-", :class => "promoteDemote demote"
+- else
+  This category is empty.
