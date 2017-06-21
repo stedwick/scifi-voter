@@ -10,11 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require prototype
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
-//= require prototype
-//= require jqTableKit
 Event.observe(window, 'load', function () {
   array_net_votes = $$('.netVotes');
   max_net_votes = array_net_votes.max(function(net_votes) {return net_votes.innerHTML * 1;});

@@ -4,7 +4,7 @@
   %table.sortable
     %thead
       %tr
-        %th.sortfirstasc.number Net Votes
+        %th.sortfirstdesc.number Net Votes
         - for header in @category.headers.split('::')
           %th.text= header
         %th.nosort= "?"
