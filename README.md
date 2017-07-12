@@ -1,24 +1,3 @@
-# README
+# Scifi Voter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Scifi Voter definitively answers the question, "What is the best Star Trek episode?" Add your vote! [https://scifi-voter.herokuapp.com](https://scifi-voter.herokuapp.com)
